@@ -21,7 +21,7 @@ void drawSliders() {
 }
 
 void mousePressed() {
-  if (gewichtSlider.isPressed(gewicht, mouseX, mouseY) { gewichtSlider.startVolgenVanMuis(); }
+  if (gewichtSlider.isPressed(gewicht, mouseX, mouseY)) { gewichtSlider.startVolgenVanMuis(); }
 }
 
 void mouseReleased() {
@@ -29,8 +29,5 @@ void mouseReleased() {
 }
 
 void update(){
-  gewichtSlider.update(mouseX, mouseY);
-}
-
-void updateGewicht() {
+  gewichtSlider.update(gewicht, mouseX, mouseY);
 }

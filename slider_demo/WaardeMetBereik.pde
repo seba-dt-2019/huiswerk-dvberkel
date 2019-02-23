@@ -1,4 +1,4 @@
-class WaardeMetBereik {
+class WaardeMetBereik extends ConcreteObservable {
   private int waarde;
   private int minimum;
   private int maximum;

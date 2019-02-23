@@ -18,7 +18,7 @@ class Slider {
   void draw(WaardeMetBereik waarde) {
     drawBalk();
     drawKnop(waarde);
-    drawWaarde(waarde, x, y, breedte, hoogte);
+    drawWaarde(waarde);
   }
   
   void drawBalk() {
@@ -52,11 +52,11 @@ class Slider {
     volgMuis = false;
   }
   
-  void update(int muisX, int muisY) {
+  void update(WaardeMetBereik waarde, int muisX, int muisY) {
     if (volgMuis) {
       int afstand = constrain(muisX, x, x + breedte);
       float percentage = float(afstand - x) / float(breedte);
-      gewicht.setPercentage(percentage);
+      waarde.setPercentage(percentage);
     }
   }
 }
