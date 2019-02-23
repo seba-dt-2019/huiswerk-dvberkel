@@ -57,13 +57,6 @@ boolean gewichtKnopPressed() {
   return knopPressed(gewicht, minimumGewicht, maximumGewicht, x, y, sliderBreedte, sliderHoogte);
 }
 
-void update(){
-}
-
-void mouseReleased() {
-  volgMuis = false;
-}
-
 boolean knopPressed(int waarde, int minimum, int maximum, int x, int y, int breedte, int hoogte) {
   float percentage = float(waarde - minimum) / float(maximum - minimum);
   float afstand = percentage * breedte;
@@ -73,4 +66,25 @@ boolean knopPressed(int waarde, int minimum, int maximum, int x, int y, int bree
 
 boolean bevatIn(float waarde, float ondergrens, float bovengrens) {
   return ondergrens <= waarde && waarde <= bovengrens;
+}
+
+void mouseReleased() {
+  volgMuis = false;
+}
+
+void update(){
+  updateGewicht();
+}
+
+void updateGewicht() {
+  if (volgMuis) {
+    int afstand = constrain(mouseX, x, x + sliderBreedte);
+    float percentage = float(afstand - x) / float(sliderBreedte);
+    float delta = percentage * (maximumGewicht - minimumGewicht);
+    println(percentage);
+    println(delta);
+    println(gewicht);
+    println(minimumGewicht + delta);
+    gewicht = minimumGewicht + int(delta);
+  }
 }
