@@ -13,6 +13,11 @@ class WaardeMetBereik {
     return float(waarde - minimum) / float(maximum - minimum);
   }
   
+  void setPercentage(float percentage) {
+    float delta = percentage * (maximum - minimum);
+    waarde = minimum + int(delta);
+  }
+  
   String toString() {
     return "" + waarde;
   }
