@@ -1,4 +1,4 @@
-class WaardeMetBereik extends ConcreteObservable {
+class WaardeMetBereik extends ConcreteObservable implements Controller {
   private int waarde;
   private int minimum;
   private int maximum;
@@ -16,6 +16,11 @@ class WaardeMetBereik extends ConcreteObservable {
   void setPercentage(float percentage) {
     float delta = percentage * (maximum - minimum);
     waarde = minimum + int(delta);
+    signal();
+  }
+  
+  void signal() {
+    notifyOf(percentage(), waarde);
   }
   
   String toString() {

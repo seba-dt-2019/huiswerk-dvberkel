@@ -7,7 +7,9 @@ void setup(){
   int sliderHoogte = 30;
   int x = (width - sliderBreedte)/2;
   int y = (height - sliderHoogte)/2;
-  gewichtSlider = new Slider(x, y, sliderBreedte, sliderHoogte, 30);
+  gewichtSlider = new Slider(gewicht, x, y, sliderBreedte, sliderHoogte, 30);
+  gewicht.addObserver(gewichtSlider);
+  gewicht.signal();
 }
 
 void draw() {
@@ -17,11 +19,11 @@ void draw() {
 }
 
 void drawSliders() {
-  gewichtSlider.draw(gewicht);
+  gewichtSlider.draw();
 }
 
 void mousePressed() {
-  if (gewichtSlider.isPressed(gewicht, mouseX, mouseY)) { gewichtSlider.startVolgenVanMuis(); }
+  if (gewichtSlider.isPressed(mouseX, mouseY)) { gewichtSlider.startVolgenVanMuis(); }
 }
 
 void mouseReleased() {
@@ -29,5 +31,5 @@ void mouseReleased() {
 }
 
 void update(){
-  gewichtSlider.update(gewicht, mouseX, mouseY);
+  gewichtSlider.update(mouseX, mouseY);
 }

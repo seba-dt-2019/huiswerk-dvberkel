@@ -1,23 +1,23 @@
 interface Observable {
-  void add(Observer observer);
+  void addObserver(Observer observer);
   
-  void notifyOf(float percentage);
+  void notifyOf(float percentage, int waarde);
 }
 
 class ConcreteObservable implements Observable {
   private ArrayList<Observer> observers = new ArrayList<Observer>();
   
-  void add(Observer observer) {
+  void addObserver(Observer observer) {
     this.observers.add(observer);
   }
   
-  void notifyOf(float percentage) {
+  void notifyOf(float percentage, int waarde) {
     for (Observer observer : observers) {
-      observer.notify(percentage);
+      observer.notify(percentage, waarde);
     }
   }
 }
 
 interface Observer {
-  void notify(float percentage);
+  void notify(float percentage, int waarde);
 }

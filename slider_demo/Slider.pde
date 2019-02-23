@@ -1,24 +1,30 @@
-class Slider {
+class Slider implements Observer {
+  private Controller controller;
   private int x;
   private int y;
   private int breedte;
   private int hoogte;
   private int knopBreedte;
   private boolean volgMuis;
+  private float percentage;
+  private int waarde;
   
-  Slider(int x, int y, int breedte, int hoogte, int knopBreedte) {
+  Slider(Controller controller, int x, int y, int breedte, int hoogte, int knopBreedte) {
+    this.controller = controller;
     this.x = x;
     this.y = y;
     this.breedte = breedte;
     this.hoogte = hoogte;
     this.knopBreedte = knopBreedte;
     this.volgMuis = false;
+    this.percentage = 0.0;
+    this.waarde = 0;
   }
   
-  void draw(WaardeMetBereik waarde) {
+  void draw() {
     drawBalk();
-    drawKnop(waarde);
-    drawWaarde(waarde);
+    drawKnop();
+    drawWaarde();
   }
   
   void drawBalk() {
@@ -26,20 +32,20 @@ class Slider {
     rect(x, y, breedte, hoogte);
   }
   
-  void drawKnop(WaardeMetBereik waarde){
-    float afstand = waarde.percentage() * breedte;
+  void drawKnop(){
+    float afstand = percentage * breedte;
     float knopX = x + afstand - knopBreedte/2;
     fill(255, 0, 255);
     rect(knopX, y, knopBreedte, hoogte);
   }
   
-  void drawWaarde(WaardeMetBereik waarde) {
+  void drawWaarde() {
     fill(250);
-    text(waarde.toString(), x, y);
+    text(waarde, x, y);
   }
   
-  boolean isPressed(WaardeMetBereik waarde, int muisX, int muisY) {
-    float afstand = waarde.percentage() * breedte;
+  boolean isPressed(int muisX, int muisY) {
+    float afstand = percentage * breedte;
     float knopX = x + afstand - knopBreedte/2;
     return bevatIn(float(muisX), knopX, knopX + knopBreedte) && bevatIn(float(muisY), y, y + hoogte);
   }
@@ -52,12 +58,17 @@ class Slider {
     volgMuis = false;
   }
   
-  void update(WaardeMetBereik waarde, int muisX, int muisY) {
+  void update(int muisX, int muisY) {
     if (volgMuis) {
       int afstand = constrain(muisX, x, x + breedte);
       float percentage = float(afstand - x) / float(breedte);
-      waarde.setPercentage(percentage);
+      controller.setPercentage(percentage);
     }
+  }
+  
+  void notify(float percentage, int waarde) {
+    this.percentage = percentage;
+    this.waarde = waarde;
   }
 }
 
