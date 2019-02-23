@@ -1,6 +1,4 @@
-int gewicht = 80;
-int minimumGewicht = 0;
-int maximumGewicht = 300;
+WaardeMetBereik gewicht = new WaardeMetBereik(80, 20, 300);
 
 int sliderBreedte = 300;
 int sliderHoogte = 30;
@@ -22,13 +20,13 @@ void draw() {
 }
 
 void drawSliders() {
-  drawSlider(gewicht, minimumGewicht, maximumGewicht, x, y, sliderBreedte, sliderHoogte);
+  drawSlider(gewicht, x, y, sliderBreedte, sliderHoogte);
 }
 
-void drawSlider(int waarde, int minimum, int maximum, int x, int y, int breedte, int hoogte) {
+void drawSlider(WaardeMetBereik waarde, int x, int y, int breedte, int hoogte) {
   drawBalk(x, y, breedte, hoogte);
-  drawKnop(waarde, minimum, maximum, x, y, breedte, hoogte);
-  drawWaarde(waarde, minimum, maximum, x, y, breedte, hoogte);
+  drawKnop(waarde, x, y, breedte, hoogte);
+  drawWaarde(waarde, x, y, breedte, hoogte);
 }
 
 void drawBalk(int x, int y, int breedte, int hoogte) {
@@ -36,17 +34,16 @@ void drawBalk(int x, int y, int breedte, int hoogte) {
   rect(x, y, breedte, hoogte);
 }
 
-void drawKnop(int waarde, int minimum, int maximum, int x, int y, int breedte, int hoogte){
-  float percentage = float(waarde - minimum) / float(maximum - minimum);
-  float afstand = percentage * breedte;
+void drawKnop(WaardeMetBereik waarde, int x, int y, int breedte, int hoogte){
+  float afstand = waarde.percentage() * breedte;
   float knopX = x + afstand - knopBreedte/2;
   fill(255, 0, 255);
   rect(knopX, y, knopBreedte, hoogte);
 }
 
-void drawWaarde(int waarde, int minimum, int maximum, int x, int y, int breedte, int hoogte) {
+void drawWaarde(WaardeMetBereik waarde, int x, int y, int breedte, int hoogte) {
   fill(250);
-  text(waarde, x, y);
+  text(waarde.toString(), x, y);
 }
 
 void mousePressed() {
@@ -81,10 +78,6 @@ void updateGewicht() {
     int afstand = constrain(mouseX, x, x + sliderBreedte);
     float percentage = float(afstand - x) / float(sliderBreedte);
     float delta = percentage * (maximumGewicht - minimumGewicht);
-    println(percentage);
-    println(delta);
-    println(gewicht);
-    println(minimumGewicht + delta);
     gewicht = minimumGewicht + int(delta);
   }
 }
