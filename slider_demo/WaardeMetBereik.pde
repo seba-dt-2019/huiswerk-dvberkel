@@ -22,8 +22,4 @@ class WaardeMetBereik extends ConcreteObservable implements Controller {
   void signal() {
     notifyOf(percentage(), waarde);
   }
-  
-  String toString() {
-    return "" + waarde;
-  }
 }

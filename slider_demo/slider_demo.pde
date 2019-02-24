@@ -3,6 +3,14 @@ Slider gewichtSlider;
 
 void setup(){
   size(500, 500);
+  setupSliders();
+}
+
+void setupSliders() {
+  setupGewichtSlider();
+}
+
+void setupGewichtSlider() {
   int sliderBreedte = 300;
   int sliderHoogte = 30;
   int x = (width - sliderBreedte)/2;
@@ -23,7 +31,7 @@ void drawSliders() {
 }
 
 void mousePressed() {
-  if (gewichtSlider.isPressed(mouseX, mouseY)) { gewichtSlider.startVolgenVanMuis(); }
+  gewichtSlider.beslisOmMuisTeVolgen(mouseX, mouseY);
 }
 
 void mouseReleased() {

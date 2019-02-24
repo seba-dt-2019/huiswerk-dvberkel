@@ -34,9 +34,8 @@ class Slider implements Observer {
   
   void drawKnop(){
     float afstand = percentage * breedte;
-    float knopX = x + afstand - knopBreedte/2;
     fill(255, 0, 255);
-    rect(knopX, y, knopBreedte, hoogte);
+    rect(knopX(afstand), y, knopBreedte, hoogte);
   }
   
   void drawWaarde() {
@@ -44,10 +43,20 @@ class Slider implements Observer {
     text(waarde, x, y);
   }
   
+  float knopX(float afstand) {
+    return x + afstand - knopBreedte/2;
+  }
+  
   boolean isPressed(int muisX, int muisY) {
     float afstand = percentage * breedte;
-    float knopX = x + afstand - knopBreedte/2;
+    float knopX = this.knopX(afstand);
     return bevatIn(float(muisX), knopX, knopX + knopBreedte) && bevatIn(float(muisY), y, y + hoogte);
+  }
+  
+  void beslisOmMuisTeVolgen(int muisX, int muisY) {
+    if (gewichtSlider.isPressed(muisX, muisY)) { 
+      gewichtSlider.startVolgenVanMuis(); 
+    }
   }
   
   void startVolgenVanMuis() {
