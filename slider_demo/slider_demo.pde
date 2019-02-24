@@ -11,11 +11,12 @@ void setupSliders() {
 }
 
 void setupGewichtSlider() {
+  SliderConfiguratie configuratie = new SliderConfiguratie(30, 30);
   int sliderBreedte = 300;
-  int sliderHoogte = 30;
   int x = (width - sliderBreedte)/2;
-  int y = (height - sliderHoogte)/2;
-  gewichtSlider = new Slider(gewicht, x, y, sliderBreedte, sliderHoogte, 30);
+  int y = (height - configuratie.hoogte)/2;
+  gewichtSlider = new Slider(gewicht, x, y, sliderBreedte);
+  gewichtSlider.setConfiguratie(configuratie);
   gewicht.addObserver(gewichtSlider);
   gewicht.signal();
 }

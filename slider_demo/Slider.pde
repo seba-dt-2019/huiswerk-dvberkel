@@ -1,21 +1,18 @@
 class Slider implements Observer {
+  private SliderConfiguratie configuratie = new DefaultSliderConfiguratie();
   private Controller controller;
   private int x;
   private int y;
   private int breedte;
-  private int hoogte;
-  private int knopBreedte;
   private boolean volgMuis;
   private float percentage;
   private int waarde;
   
-  Slider(Controller controller, int x, int y, int breedte, int hoogte, int knopBreedte) {
+  Slider(Controller controller, int x, int y, int breedte) {
     this.controller = controller;
     this.x = x;
     this.y = y;
     this.breedte = breedte;
-    this.hoogte = hoogte;
-    this.knopBreedte = knopBreedte;
     this.volgMuis = false;
     this.percentage = 0.0;
     this.waarde = 0;
@@ -29,13 +26,13 @@ class Slider implements Observer {
   
   void drawBalk() {
     fill(255);
-    rect(x, y, breedte, hoogte);
+    rect(x, y, breedte, configuratie.hoogte);
   }
   
   void drawKnop(){
     float afstand = percentage * breedte;
     fill(255, 0, 255);
-    rect(knopX(afstand), y, knopBreedte, hoogte);
+    rect(knopX(afstand), y, configuratie.knopBreedte, configuratie.hoogte);
   }
   
   void drawWaarde() {
@@ -44,13 +41,13 @@ class Slider implements Observer {
   }
   
   float knopX(float afstand) {
-    return x + afstand - knopBreedte/2;
+    return x + afstand - configuratie.knopBreedte/2;
   }
   
   boolean isPressed(int muisX, int muisY) {
     float afstand = percentage * breedte;
     float knopX = this.knopX(afstand);
-    return bevatIn(float(muisX), knopX, knopX + knopBreedte) && bevatIn(float(muisY), y, y + hoogte);
+    return bevatIn(float(muisX), knopX, knopX + configuratie.knopBreedte) && bevatIn(float(muisY), y, y + configuratie.hoogte);
   }
   
   void beslisOmMuisTeVolgen(int muisX, int muisY) {
@@ -79,8 +76,28 @@ class Slider implements Observer {
     this.percentage = percentage;
     this.waarde = waarde;
   }
+  
+  void setConfiguratie(SliderConfiguratie configuratie) {
+    this.configuratie = configuratie;
+  }
 }
 
 boolean bevatIn(float waarde, float ondergrens, float bovengrens) {
   return ondergrens <= waarde && waarde <= bovengrens;
+}
+
+class SliderConfiguratie {
+  public final int hoogte;
+  public final int knopBreedte;
+  
+  SliderConfiguratie(int hoogte, int knopBreedte) {
+    this.hoogte = hoogte;
+    this.knopBreedte = knopBreedte;
+  }
+}
+
+class DefaultSliderConfiguratie extends SliderConfiguratie {
+  DefaultSliderConfiguratie() {
+    super(30, 30);
+  }
 }
